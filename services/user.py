@@ -1,6 +1,7 @@
 from typing import Optional
 
 from db.models import User
+from django.contrib.auth import get_user
 
 
 def create_user(username: str,
@@ -8,14 +9,14 @@ def create_user(username: str,
                 email: Optional[str] = None,
                 first_name: Optional[str] = None,
                 last_name: Optional[str] = None) -> User:
-    User.objects.create_user(username=username,
-                             password=password,
-                             email=email,
-                             first_name=first_name or "",
-                             last_name=last_name or "")
+    return User.objects.create_user(username=username,
+                                    password=password,
+                                    email=email,
+                                    first_name=first_name or "",
+                                    last_name=last_name or "")
 
 
-def get_user(user_id: int) -> Optional[User]:
+def get_user(user_id: int) -> User:
     return User.objects.get(id=user_id)
 
 
