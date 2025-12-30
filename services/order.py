@@ -27,7 +27,6 @@ def create_order(tickets: list[dict],
     order = Order.objects.create(user=user)
     if parsed:
         order.created_at = parsed
-        order.save()
     for ticket in tickets:
         ms = MovieSession.objects.get(pk=ticket["movie_session"])
         Ticket.objects.create(movie_session=ms,

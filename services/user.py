@@ -1,22 +1,25 @@
-from typing import Optional
+from typing import Optional, Any
 
-from db.models import User
+from django.contrib.auth import get_user_model
+
 
 
 def create_user(username: str,
                 password: str,
                 email: Optional[str] = None,
                 first_name: Optional[str] = None,
-                last_name: Optional[str] = None) -> User:
-    return User.objects.create_user(username=username,
+                last_name: Optional[str] = None) -> Any:
+    user_model = get_user_model()
+    return user_model.objects.create_user(username=username,
                                     password=password,
                                     email=email,
                                     first_name=first_name or "",
                                     last_name=last_name or "")
 
 
-def get_user(user_id: int) -> User:
-    return User.objects.get(id=user_id)
+def get_user(user_id: int) -> Any:
+    user_model = get_user_model()
+    return user_model.objects.get(id=user_id)
 
 
 def update_user(user_id: int,
@@ -24,7 +27,7 @@ def update_user(user_id: int,
                 password: Optional[str] = None,
                 email: Optional[str] = None,
                 first_name: Optional[str] = None,
-                last_name: Optional[str] = None) -> User:
+                last_name: Optional[str] = None) -> Any:
     user = get_user(user_id)
     if username is not None:
         user.username = username
